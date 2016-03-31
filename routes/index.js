@@ -29,6 +29,10 @@ router.post('/events', function(req, res, next) {
   });
 });
 
+router.get('/events/:event', function(req, res) {
+  res.json(req.event);
+});
+
 
 router.param('event', function(req, res, next, id) {
   var query = Event.findById(id);

@@ -9,7 +9,12 @@ function($stateProvider, $urlRouterProvider) {
     .state('home', {
       url: '/home',
       templateUrl: '/home.html',
-      controller: 'MainCtrl'
+      controller: 'MainCtrl',
+      resolve: {
+        postPromise: ['events', function(events){
+      return events.getAll();
+    }]
+  }
     })
     
     .state('events', {
@@ -56,6 +61,7 @@ function($scope, events) {
 	$scope.events = events.events;
 	
 	$scope.title = '';
+	
 
 	$scope.addEvent = function() {
 		if ($scope.event_T === '') {
@@ -105,9 +111,9 @@ function($scope, events) {
 
 }]);
 
-/*app.controller('EventsCtrl', ['$scope', 'events', 'event',
+app.controller('EventsCtrl', ['$scope', 'events', 'event',
 function($scope, events, event){
     
     $scope.event = event;
 
-}]);*/
+}]);
