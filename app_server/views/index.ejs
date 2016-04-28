@@ -56,6 +56,44 @@
 
                 
     }).addTo(map);
+    
+    function onEachFeature(feature, layer) {
+      //Is there a popupContent for the feature?
+      if (feature.properties && feature.properties.popupContent) {
+        layer.bindPopup(feature.properties.popupContent);
+      }
+    }
+    
+    //Replace this variable with code retrieving a geoJson from MongoDB
+    //Create popupContent from existing MongoDB schema - Hyperlink from popup
+    //to /events/info/# page
+    var events = [{
+      "type": "Feature",
+      "properties": {
+        "name": "Arrow and Loon",
+        "eventType": "pub",
+        "popupContent": "Trivia Night<br />7:30"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-75.68739, 45.4019]
+      }
+    }, {
+      "type": "Feature",
+      "properties": {
+        "name": "RA Centre",
+        "eventType": "fitness class",
+        "popupContent": "Fencing Classes<br />8:00"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-75.68483, 45.38182]
+      }
+    }];
+    
+    L.geoJson(events, {
+      onEachFeature: onEachFeature
+    }).addTo(map);
             
     lc.start();
             
