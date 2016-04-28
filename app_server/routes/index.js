@@ -8,7 +8,7 @@ var ctrlEvents = require('../controllers/events');
 router.get('/', ctrlMain.index);
 
 /* User Pages */
-router.get('/users', ctrlUsers.userLogin);
+router.get('/users/login', ctrlUsers.userLogin);
 router.get('/users', ctrlUsers.userHome);
 router.get('/users/settings', ctrlUsers.userSettings);
 router.get('/users/settings/time', ctrlUsers.userDefaultTime);
