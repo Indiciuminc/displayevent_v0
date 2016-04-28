@@ -1,15 +1,3 @@
-var mongoose = require('mongoose');
-var mongodbUri = 'mongodb://ds023078.mlab.com:23078/core';
-
-var options = {
-  user: 'admin',
-  pass: 'P@ssw0rd'
-};
-
-mongoose.connect(mongodbUri, options);
-
-require('./models/Events');
-
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
@@ -17,15 +5,13 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
-var routes = require('./routes/index');
-var users = require('./routes/users');
+var routes = require('./app_server/routes/index');
+var users = require('./app_server/routes/users');
 
 var app = express();
 
-module.exports = app;
-
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
+app.set('views', path.join(__dirname, 'app_server', 'views'));
 app.set('view engine', 'ejs');
 
 // uncomment after placing your favicon in /public
@@ -69,3 +55,6 @@ app.use(function(err, req, res, next) {
     error: {}
   });
 });
+
+
+module.exports = app;

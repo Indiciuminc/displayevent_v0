@@ -1,9 +1,13 @@
 {
-  "name": "workspace",
-  "version": "0.0.0",
+  "name": "Nowmapr Events",
+  "version": "0.0.1j",
   "private": true,
   "scripts": {
     "start": "node ./bin/www"
+  },
+  "engines": {
+    "node": "~4.4.0",
+    "npm": "~2.14.20"
   },
   "dependencies": {
     "body-parser": "~1.13.2",
@@ -11,7 +15,6 @@
     "debug": "~2.2.0",
     "ejs": "~2.3.3",
     "express": "~4.13.1",
-    "mongoose": "^4.4.10",
     "morgan": "~1.6.1",
     "serve-favicon": "~2.3.0"
   }
