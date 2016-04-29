@@ -9,6 +9,19 @@ var options = {
 
 mongoose.connect(mongoURI, options);
 
+//Emulate SIGINT behaviour if app is running on Windows
+var readLine = require ("readline");
+if (process.platform === "win32"){
+    var rl = readLine.createInterface ({
+        input: process.stdin,
+        output: process.stdout
+    });
+    rl.on ("SIGINT", function(){
+        process.emit ("SIGINT");
+    });
+}
+
+//Listeners to establish Mongoose connection status
 mongoose.connection.on('connected', function () {
     console.log('Mongoose connected to ' + mongoURI);
 });
