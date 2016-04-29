@@ -1,6 +1,6 @@
 /* GET 'Event Info' Page */
 module.exports.eventInfo = function(req, res) {
-    res.render('event', {title: 'Event Title' });
+    res.render('event-info', {title: 'Event Title' });
 };
 
 /* GET 'Event Info Reviews' Page */

@@ -30,7 +30,7 @@
   <link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-locatecontrol/v0.43.0/css/font-awesome.min.css' rel='stylesheet' />
   
   <div id="map"></div>
-  <script>
+  <script type="text/javascript">
     L.mapbox.accessToken = 'pk.eyJ1Ijoibm93bWFwciIsImEiOiJjaWh2MWVxZWMwMXdpdWtrb2kzYWcyMTU0In0.3aVwJ98ifZ35kEtQjpUjwQ';
     var map = L.mapbox.map('map', 'mapbox.streets', { zoomControl:false })
       .addControl(L.mapbox.geocoderControl('mapbox.places', { position: 'topright', keepOpen: false, autocomplete: false }));
@@ -69,46 +69,21 @@
     //to /events/info/# page
     var events = [];
     
-    /*
-    <%# nowEvents.forEach(function(nowEvents) { %>
+    <% nowEvents.forEach(function(event) { %>
       events.push({
         "type": "Feature",
         "properties": {
-          "name": <%# nowEvents.location %>,
-          "eventType": <%# nowEvents.eventType %>,
-          "popupContent": <%# nowEvents.details %>
+          "name": "<%= event.location %>",
+          "eventType": "<%= event.eventType %>",
+          "popupContent": "<%- event.details %>"
         },
         "geometry": {
           "type": "Point",
-          "coordinates": [<%# nowEvents.lat %>, <%# nowEvents.lon %>]
+          "coordinates": [<%= event.lon %>, <%= event.lat %>]
+          
         }
       });
-    <%# }); %>
-    */
-    
-    var events = [{
-      "type": "Feature",
-      "properties": {
-        "name": "Arrow and Loon",
-        "eventType": "pub",
-        "popupContent": "Trivia Night<br />7:30"
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [-75.68739, 45.4019]
-      }
-    }, {
-      "type": "Feature",
-      "properties": {
-        "name": "RA Centre",
-        "eventType": "fitness class",
-        "popupContent": "Fencing Classes<br />8:00"
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [-75.68483, 45.38182]
-      }
-    }];
+    <% }); %>
     
     L.geoJson(events, {
       onEachFeature: onEachFeature
