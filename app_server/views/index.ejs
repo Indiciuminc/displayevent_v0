@@ -67,6 +67,23 @@
     //Replace this variable with code retrieving a geoJson from MongoDB
     //Create popupContent from existing MongoDB schema - Hyperlink from popup
     //to /events/info/# page
+    var events = [];
+    /*
+    <%# nowEvents.forEach(function(nowEvents) { %>
+      events.push({
+        "type": "Feature",
+        "properties": {
+          "name": <%# nowEvents.location %>,
+          "eventType": <%# nowEvents.eventType %>,
+          "popupContent": <%# nowEvents.details %>
+        },
+        "geometry": {
+          "type": "Point",
+          "coordinates": [<%# nowEvents.lat %>, <%# nowEvents.lon %>]
+        }
+      });
+    <%# }); %>
+    */
     var events = [{
       "type": "Feature",
       "properties": {
