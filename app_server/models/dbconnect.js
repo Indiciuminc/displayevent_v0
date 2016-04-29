@@ -25,11 +25,9 @@ if (process.platform === "win32"){
 mongoose.connection.on('connected', function () {
     console.log('Mongoose connected to ' + mongoURI);
 });
-
 mongoose.connection.on('error', function (err) {
     console.log('Mongoose connection error: ' + err);
 });
-
 mongoose.connection.on('disconnected', function () {
     console.log('Mongoose disconnected');
 });
@@ -42,21 +40,27 @@ var exterminateCxn = function (msg, callback) {
     });
 };
 
-//Listeners to call exterminateCxn when the application terminates
+/* Listeners to call exterminateCxn when the application terminates 
+   Important to add listeners if environment uses any different types 
+   of termination signals!*/
+//Listening for nodemon restarts
 process.once('SIGUSR2', function () {
     exterminateCxn('nodemon restart', function () {
         process.kill(process.pid, 'SIGUSR2');
     });
 });
-
+//Listening for app termination
 process.on('SIGINT', function () {
     exterminateCxn('app termination', function () {
         process.exit(0);
     });
 });
-
+//Listening for Heroku app termination
 process.on('SIGTERM', function () {
     exterminateCxn('Heroku app shutdown', function () {
         process.exit(0);
     });
 });
+
+//Get the schema for Nowmapr events
+require('./events');
