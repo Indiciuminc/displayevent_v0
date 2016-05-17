@@ -49,6 +49,7 @@ var eventSchema = new mongoose.Schema({
         index: '2dsphere',
         required: true
     },
+    eventType: String,
     info: String,
     admis: String,
     cost: String,
