@@ -1,5 +1,27 @@
 var mongoose = require( 'mongoose' );
 
+var reviewSchema = new mongoose.Schema({
+    uName: {
+        type: String,
+        required: true
+    },
+    rating: {
+        type: Number,
+        "default": 0,
+        min: 0,
+        max: 5,
+        required: true
+    },
+    reviewText: {
+        type: String,
+        required: true
+    },
+    createdOn: {
+        type: Date,
+        "default": Date.now
+    }
+});
+
 var eventSchema = new mongoose.Schema({
     name: {
         type: String,
@@ -36,4 +58,7 @@ var eventSchema = new mongoose.Schema({
     tweet: String,
     google: String,
     web: String,
+    reviews: [reviewSchema]
 });
+
+//mongoose.model('Event', eventSchema, 'events');

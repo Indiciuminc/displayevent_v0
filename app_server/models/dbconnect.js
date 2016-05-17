@@ -1,6 +1,6 @@
 var mongoose = require( 'mongoose' );
 
-var mongoURI = 'mongodb://ds023078.mlab.com:23078/core';
+var mongoURI = 'mongodb://ds011872.mlab.com:11872/core';
 
 var options = {
   user: 'admin',
