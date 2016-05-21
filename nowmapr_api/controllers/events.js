@@ -21,6 +21,7 @@ module.exports.eventsReadOne = function (req, res) {
         Evt
           //Get eventid from the URL request parameter and give it to Mongoose findById method
           .findById(req.params.eventid)
+          //.select('name coords info eventType')
           //Define callback to accept possible parameters from Mongoose connection
           .exec(function(err, event) {
             //Check that Mongoose returns an event, otherwise whether it returns an error
