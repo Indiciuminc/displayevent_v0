@@ -13,3 +13,12 @@ var sendJsonResponse = function(res, status, content) {
 module.exports.eventsCreate = function (req, res) { 
     sendJsonResponse(res, 200, {"status" : "success"});
 };
+
+/*Placeholder Read One Event controller for API */
+module.exports.eventsReadOne = function (req, res) { };
+
+/*Placeholder Update One Event controller for API */
+module.exports.eventsUpdateOne = function (req, res) { };
+
+/*Placeholder Delete One Event controller for API */
+module.exports.eventsDeleteOne = function (req, res) { };

@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var ctrlUsers = require('../controllers/users'); //Don't think we need API router/controller for User. Will be taken care of in login code
+//var ctrlUsers = require('../controllers/users'); //Don't think we need API router/controller for User. Will be taken care of in login code
 var ctrlEvents = require('../controllers/events');
 var ctrlReviews = require('../controllers/reviews');
 
@@ -8,7 +8,7 @@ var ctrlReviews = require('../controllers/reviews');
 //router.get('/users', ctrlUsers.userHome);
 
 //Routes for Events
-router.get('/', ctrlEvents.eventsListByDistance);
+//router.get('/', ctrlEvents.eventsListByDistance);
 router.post('/events', ctrlEvents.eventsCreate);
 router.get('/events/:eventid', ctrlEvents.eventsReadOne);
 router.put('/events/:eventid', ctrlEvents.eventsUpdateOne);
