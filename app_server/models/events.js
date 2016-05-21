@@ -62,4 +62,4 @@ var eventSchema = new mongoose.Schema({
     reviews: [reviewSchema]
 });
 
-//mongoose.model('Event', eventSchema, 'events');
+mongoose.model('Event', eventSchema, 'events');
