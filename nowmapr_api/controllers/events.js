@@ -19,6 +19,7 @@ module.exports.eventsReadOne = function (req, res) {
     Evt
       //Get eventid from the URL request parameter and give it to Mongoose findById method
       .findById(req.params.eventid)
+      //Define callback to accept possible parameters from Mongoose connection
       .exec(function(err, event) {
         sendJsonResponse(res, 200, event);
       });
