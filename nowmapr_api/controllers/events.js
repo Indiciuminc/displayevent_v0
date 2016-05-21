@@ -16,13 +16,32 @@ module.exports.eventsCreate = function (req, res) {
 
 /*Placeholder Read One Event controller for API */
 module.exports.eventsReadOne = function (req, res) {
-    Evt
-      //Get eventid from the URL request parameter and give it to Mongoose findById method
-      .findById(req.params.eventid)
-      //Define callback to accept possible parameters from Mongoose connection
-      .exec(function(err, event) {
-        sendJsonResponse(res, 200, event);
-      });
+    //Check that eventid exists in request parameters
+    if (req.params && req.params.eventid) {
+        Evt
+          //Get eventid from the URL request parameter and give it to Mongoose findById method
+          .findById(req.params.eventid)
+          //Define callback to accept possible parameters from Mongoose connection
+          .exec(function(err, event) {
+            //Check that Mongoose returns an event, otherwise whether it returns an error
+            if (!event) {
+              sendJsonResponse(res, 404, {
+                  "message" : "eventid not found"
+              });
+              return;
+            } else if (err) {
+              sendJsonResponse(res, 404, err);
+              return;
+            }
+            //If Mongoose didn't throw and error, return the correct event object
+            sendJsonResponse(res, 200, event);
+          });
+    //If request parameters didn't include eventid, send appropriate 404 response
+    } else {
+        sendJsonResponse(res, 404, {
+            "message" : "No eventid in request"
+        });
+    }
 };
 
 /*Placeholder Update One Event controller for API */
