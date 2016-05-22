@@ -55,6 +55,12 @@
                 
     }).addTo(map);
     
+    //If the user's location is found by Leaflet's locate(), create variables for the lat and lng
+    map.on('locationfound', function(e) {
+      var usrLat = e.latitude;
+      var usrLng = e.longitude;
+    });
+    
     function onEachFeature(feature, layer) {
       //Is there a popupContent for the feature?
       if (feature.properties && feature.properties.popupContent) {
