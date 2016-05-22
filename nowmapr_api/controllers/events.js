@@ -29,7 +29,19 @@ var sendJsonResponse = function(res, status, content) {
 
 /*Placeholder Read All Events controller for API - Connect to Main page(?) */
 module.exports.eventsListByDistance = function (req, res) {
-  sendJsonResponse(res, 200, {"status" : "success"});
+  var lng = parseFloat(req.query.lng);
+  var lat = parseFloat(req.query.lat);
+  var point = {
+      type: "Point",
+      coordinates: [lng, lat]
+  };
+  var geoOptions = {
+      spherical: true,
+      maxDistance: theEarth.getRadsFromDistance(5),
+      //num: 10 //This will get only the 10 closest within the maxDistance
+  };
+  Evt.geoNear(point, geoOptions, callback);
+  //sendJsonResponse(res, 200, {"status" : "success"});
 };
 
 /*Placeholder Create Event controller for API */
