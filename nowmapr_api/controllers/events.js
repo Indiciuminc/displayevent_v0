@@ -27,6 +27,11 @@ var sendJsonResponse = function(res, status, content) {
   res.json(content);
 };
 
+/*Placeholder Read All Events controller for API - Connect to Main page(?) */
+module.exports.eventsListByDistance = function (req, res) {
+  sendJsonResponse(res, 200, {"status" : "success"});
+};
+
 /*Placeholder Create Event controller for API */
 module.exports.eventsCreate = function (req, res) {
     sendJsonResponse(res, 200, {"status" : "success"});

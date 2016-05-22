@@ -8,7 +8,7 @@ var ctrlReviews = require('../controllers/reviews');
 //router.get('/users', ctrlUsers.userHome);
 
 //Routes for Events
-//router.get('/', ctrlEvents.eventsListByDistance);
+router.get('/', ctrlEvents.eventsListByDistance);
 router.post('/events', ctrlEvents.eventsCreate);
 router.get('/events/:eventid', ctrlEvents.eventsReadOne);
 router.put('/events/:eventid', ctrlEvents.eventsUpdateOne);
