@@ -59,6 +59,7 @@ module.exports.eventsListByDistance = function (req, res) {
   var geoOptions = {
       maxDistance: mDist.getMsFromDistance(5),
       spherical: true
+      /* query: { eventType: userTypeArray }  //Add this later to use userSettings eventType list to narrow results*/
       //num: 10 //This will get only the 10 closest within the maxDistance
   };
   
