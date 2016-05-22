@@ -3,9 +3,9 @@ var mongoose = require('mongoose');
 //Bring in Event model (from '/app_server/models/events.js' schema) to interact with Events collection
 var Evt = mongoose.model('Event');
 
-/*Create radians distance for use in events lookup*/
+/*Create radians distance for use in events lookup
 var theEarth = (function() {
-    var earthRadius = 6371; //kilometres; for miles use 3959
+    var earthRadius = 6371; //kilometres, for miles use 3959 (If geoNear needs radians)
     
     var getDistanceFromRads = function(rads) {
         return parseFloat(rads * earthRadius);
@@ -19,6 +19,24 @@ var theEarth = (function() {
       getDistanceFromRads : getDistanceFromRads,
       getRadsFromDistance : getRadsFromDistance
     };
+}) ();*/
+
+/*Create meters distance for use in events lookup*/
+var mDist = (function() {
+    var meters = 1000; //kilometres, for miles use 1609
+    
+    var getDistanceFromMs = function(mets) {
+        return parseFloat(mets / meters);
+    };
+    
+    var getMsFromDistance = function(distance) {
+        return parseFloat(distance * meters);
+    };
+    
+    return {
+      getDistanceFromMs : getDistanceFromMs,
+      getMsFromDistance : getMsFromDistance
+    };
 }) ();
 
 /*Utility function accepting response object, status code, and data */
@@ -29,19 +47,48 @@ var sendJsonResponse = function(res, status, content) {
 
 /*Placeholder Read All Events controller for API - Connect to Main page(?) */
 module.exports.eventsListByDistance = function (req, res) {
+  //Get lat and lng from Main page code
   var lng = parseFloat(req.query.lng);
   var lat = parseFloat(req.query.lat);
   var point = {
       type: "Point",
       coordinates: [lng, lat]
   };
+  
+  //Create geoNear options object - to include user's settings distance radius setting later
   var geoOptions = {
-      spherical: true,
-      maxDistance: theEarth.getRadsFromDistance(5),
+      maxDistance: mDist.getMsFromDistance(5),
+      spherical: true
       //num: 10 //This will get only the 10 closest within the maxDistance
   };
-  Evt.geoNear(point, geoOptions, callback);
-  //sendJsonResponse(res, 200, {"status" : "success"});
+  
+  //Check that lat and lng query parameters exist in the right format
+  if (!lng || !lat) {
+      sendJsonResponse(res, 404, {
+          "message" : "lng and lat query parameters are required"
+      });
+      return;
+  }
+  Evt.geoNear(point, geoOptions, function (err, results, stats) {
+      //New array to hold results objects
+      var locations = [];
+      
+      //Check whether geoNear query throws an error.
+      if (err) {
+          sendJsonResponse(res, 404, err);
+      } else {
+        results.forEach(function(doc) {
+              locations.push({
+                  mDistance: doc.dis,
+                  distance: mDist.getDistanceFromMs(doc.dis),
+                  name: doc.obj.name,
+                  address: doc.obj.address,
+                  _id: doc.obj._id
+              });
+        });
+        sendJsonResponse(res, 200, locations);
+      }
+  });
 };
 
 /*Placeholder Create Event controller for API */
