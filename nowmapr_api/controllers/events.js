@@ -3,6 +3,24 @@ var mongoose = require('mongoose');
 //Bring in Event model (from '/app_server/models/events.js' schema) to interact with Events collection
 var Evt = mongoose.model('Event');
 
+/*Create radians distance for use in events lookup*/
+var theEarth = (function() {
+    var earthRadius = 6371; //kilometres; for miles use 3959
+    
+    var getDistanceFromRads = function(rads) {
+        return parseFloat(rads * earthRadius);
+    };
+    
+    var getRadsFromDistance = function(distance) {
+        return parseFloat(distance/earthRadius);
+    };
+    
+    return {
+      getDistanceFromRads : getDistanceFromRads,
+      getRadsFromDistance : getRadsFromDistance
+    };
+}) ();
+
 /*Utility function accepting response object, status code, and data */
 var sendJsonResponse = function(res, status, content) {
   res.status(status);
