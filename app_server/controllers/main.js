@@ -8,52 +8,35 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 //Function to Render data on the Homepage 'Index'
-var renderHomepage = function(req, res) {
+var renderHomepage = function(req, res, responseBody) {
    res.render('index', {
         title: 'Nowmapr - What\'s out there?',
-        nowEvents: [{
-            location: 'Arrow and Loon',
-            eventType: 'pub',
-            details: 'Trivia Night<br />7:30',
-            lat: 45.4019,
-            lon: -75.68739
-        }, {
-            location: 'RA Centre',
-            eventType: 'fitness class',
-            details: 'Fencing Classes<br />8:00',
-            lat: 45.38182,
-            lon: -75.68483
-        }, {
-            location: 'Absolute Comedy',
-            eventType: 'night life',
-            details: 'Open Mic Night<br />7:30',
-            lat: 45.40073,
-            lon: -75.70992
-        }, {
-            location: 'Lansdowne Park',
-            eventType: 'concert',
-            details: 'The Piano Guys<br />May 14<br />7:00',
-            lat: 45.39875,
-            lon: -75.68386
-        }, {
-            location: 'Jesse\'s Girl\'s Place',
-            eventType: 'party',
-            details: 'THE BIGGEST PARTY<br />6:00',
-            lat: 45.34514,
-            lon: -75.76981
-        }, {
-            location: 'Centrepointe Theatre',
-            eventType: 'arts',
-            details: 'Community Theatre Production of Rocky Horror<br />8:30',
-            lat: 45.34446,
-            lon: -75.76221
-        }]
-    }); 
+        nowEvents: responseBody
+    });
 };
 
 /* GET Home Page */
 module.exports.index = function(req, res) {
-    renderHomepage(req, res);
+    //Create variables to hold Request options and URL to API call
+    var requestOptions, path;
+    path = '/api';
+    requestOptions = {
+        url : apiOptions.server + path,
+        method : "GET",
+        json : {},
+        //Query string parameters - lat/lng from mobile location, other settings retrieved from user-definitions later
+        qs : {
+            lng : -75.688323,
+            lat : 45.403071,
+            maxDistance : 5
+        }
+    };
+    request(
+        requestOptions,
+        function(err, response, body) {
+            renderHomepage(req, res, body);
+        }
+    );
 };
 
 //nowEvents GET method

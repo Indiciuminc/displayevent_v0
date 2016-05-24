@@ -84,6 +84,9 @@ module.exports.eventsListByDistance = function (req, res) {
                   distance: mDist.getDistanceFromMs(doc.dis),
                   name: doc.obj.name,
                   address: doc.obj.address,
+                  eventType: doc.obj.eventType,
+                  coords: doc.obj.coords,
+                  details: doc.obj.info,
                   _id: doc.obj._id
               });
         });
