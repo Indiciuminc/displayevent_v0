@@ -1,8 +1,15 @@
+//Use Request to hook App/Site page calls into API
 var request = require('request');
+var apiOptions = {
+    server : "https://display-event-v-j-epeecurean.c9users.io"
+};
+if (process.env.NODE_ENV === 'production') {
+    apiOptions.server = "https://display-event-v-j-epeecurean.c9users.io";
+}
 
-/* GET Home Page */
-module.exports.index = function(req, res) {
-    res.render('index', {
+//Function to Render data on the Homepage 'Index'
+var renderHomepage = function(req, res) {
+   res.render('index', {
         title: 'Nowmapr - What\'s out there?',
         nowEvents: [{
             location: 'Arrow and Loon',
@@ -41,7 +48,12 @@ module.exports.index = function(req, res) {
             lat: 45.34446,
             lon: -75.76221
         }]
-    });
+    }); 
+};
+
+/* GET Home Page */
+module.exports.index = function(req, res) {
+    renderHomepage(req, res);
 };
 
 //nowEvents GET method
