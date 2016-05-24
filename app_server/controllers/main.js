@@ -36,8 +36,10 @@ module.exports.index = function(req, res) {
         function(err, response, body) {
             var i, data;
             data = body;
-            for (i=0; i<data.length; i++) {
-                data[i].distance = _formatDistance(data[i].distance);
+            if (response.statusCode === 200 && data.length) {
+                for (i=0; i<data.length; i++) {
+                    data[i].distance = _formatDistance(data[i].distance);
+                }
             }
             renderHomepage(req, res, data);
         }
