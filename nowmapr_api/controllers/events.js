@@ -57,7 +57,7 @@ module.exports.eventsListByDistance = function (req, res) {
   
   //Create geoNear options object - to include user's settings distance radius setting later
   var geoOptions = {
-      maxDistance: mDist.getMsFromDistance(5),
+      maxDistance: mDist.getMsFromDistance(parseFloat(req.query.maxDistance)),
       spherical: true
       /* query: { eventType: userTypeArray }  //Add this later to use userSettings eventType list to narrow results*/
       //num: 10 //This will get only the 10 closest within the maxDistance
