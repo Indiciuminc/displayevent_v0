@@ -9,9 +9,21 @@ if (process.env.NODE_ENV === 'production') {
 
 //Function to Render data on the Homepage 'Index'
 var renderHomepage = function(req, res, responseBody) {
-   res.render('index', {
+    var message;
+    if (!(responseBody instanceof Array)) {
+        //Response from API is not an array. Avoids possibility of app throwing error if string sent instead.
+        message = "API lookup error";
+        responseBody = [];
+    } else {
+        if (!responseBody.length) {
+            //Response is an array of length 0.
+            message = "No events listed in your area.";
+        }
+    }
+    res.render('index', {
         title: 'Nowmapr - What\'s out there?',
-        nowEvents: responseBody
+        nowEvents: responseBody,
+        message: message
     });
 };
 
