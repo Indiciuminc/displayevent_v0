@@ -64,7 +64,7 @@ module.exports.eventsListByDistance = function (req, res) {
   };
   
   //Check that lat and lng query parameters exist in the right format
-  if ((!lng && lng!==0) || (!lat && lat!==0)) {
+  if (!lng || !lat) {
       sendJsonResponse(res, 404, {
           "message" : "lng and lat query parameters are required"
       });
