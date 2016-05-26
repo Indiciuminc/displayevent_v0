@@ -2,13 +2,13 @@
 <!-- Declares nowmaprApp as the starting Angular module -->
 <html class="no-js" ng-app="nowmaprApp" lang="en">
     <head>
-        <meta charset="utf-8">
+        <% include ../views/partials/head %>
         <title><%= title %></title>
+        <!-- Google Maps API -->
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCW1as5vFGFMHEPJhnUKVdLl7-SYA_1SZE&callback=initMap" async defer></script>
+
         <meta name="description" content="Webpage-based application for viewing events near user's location">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-        
-        <% include ../views/partials/head %>
-
     </head>
     <body>
         <div id="map"></div>
