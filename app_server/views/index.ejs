@@ -1,102 +1,24 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title><%= title %></title>
-  
-  <% include ../views/partials/head %>
-  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.10/angular.min.js"></script>
-  <script src="./javascripts/angularApp.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.10/angular-ui-router.js"></script>
-  
-  <script src='https://api.mapbox.com/mapbox.js/v2.3.0/mapbox.js'></script>
-  <link href='https://api.mapbox.com/mapbox.js/v2.3.0/mapbox.css' rel='stylesheet' />
-  <link href='https://storage.googleapis.com/nowmapr_v0/dist/leaflet-usermarker/distr/leaflet.usermarker.css' rel='stylesheet' />
-  
-</head>
-<body ng-app="createEvent"> <!-- Add class="container" here when you have figured out Bootstrap for collapsible menu -->
-  <div class="page-header">
-      <img src="https://storage.googleapis.com/nowmapr_v0/img/nowmapr.jpg" alt="nowmapr" height="75" width="225">
-  </div>
-  <!--<header>
-      <%# include ../views/partials/header %>
-  </header>-->
-  
-  <script src='https://storage.googleapis.com/nowmapr_v0/dist/leaflet-locatecontrol/dist/L.Control.Locate.min.js'></script>
-  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
-  <script src="https://storage.googleapis.com/nowmapr_v0/dist/leaflet-usermarker/distr/leaflet.usermarker.js"></script>
+<html class="no-js" ng-app="nowmaprApp" lang="en">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        <meta charset="utf-8">
+        <title><%= title %></title>
+        
+        <% include ../views/partials/head %>
 
-  <link href='https://storage.googleapis.com/nowmapr_v0/dist/leaflet-locatecontrol/dist/L.Control.Locate.mapbox.css' rel='stylesheet' />
-  <link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-locatecontrol/v0.43.0/css/font-awesome.min.css' rel='stylesheet' />
-  
-  <div id="map"></div>
-  <script type="text/javascript">
-    L.mapbox.accessToken = 'pk.eyJ1Ijoibm93bWFwciIsImEiOiJjaWh2MWVxZWMwMXdpdWtrb2kzYWcyMTU0In0.3aVwJ98ifZ35kEtQjpUjwQ';
-    var map = L.mapbox.map('map', 'mapbox.streets', { zoomControl:false })
-      .addControl(L.mapbox.geocoderControl('mapbox.places', { position: 'topright', keepOpen: false, autocomplete: false }));
-            
-    var locateme = L.icon({
-    
-      iconUrl: 'https://storage.googleapis.com/nowmapr_v0/img/marker-pink-icon.png',
-      shadowUrl: 'https://storage.googleapis.com/nowmapr_v0/img/marker-shadow.png',
-                
-    });
-            
-    var lc = L.control.locate({
-      drawCircle: false,
-      keepCurrentZoomLevel: false,
-      follow: true,
-      setView: true,
-      markerClass: L.userMarker,
-      markerStyle: {pulsing: true},
-      icon: 'fa fa-map-marker',
-      iconLoading: 'fa fa-spinner fa-spin',
-      iconElementTag: 'span',
-                
-    }).addTo(map);
-    
-    //If the user's location is found by Leaflet's locate(), create variables for the lat and lng
-    map.on('locationfound', function(e) {
-      var usrLat = e.latitude;
-      var usrLng = e.longitude;
-    });
-    
-    function onEachFeature(feature, layer) {
-      //Is there a popupContent for the feature?
-      if (feature.properties && feature.properties.popupContent) {
-        layer.bindPopup(feature.properties.popupContent);
-      }
-    }
-    
-    //Replace this variable with code retrieving a geoJson from MongoDB
-    //Create popupContent from existing MongoDB schema - Hyperlink from popup
-    //to /events/info/# page
-    var events = [];
-    
-    <% nowEvents.forEach(function(event) { %>
-      events.push({
-        "type": "Feature",
-        "properties": {
-          "name": "<%= event.location %>",
-          "eventType": "<%= event.eventType %>",
-          "popupContent": "<%- event.details %>"
-        },
-        "geometry": {
-          "type": "Point",
-          "coordinates": [<%= event.coords %>]
-        }
-      });
-    <% }); %>
-    
-    L.geoJson(events, {
-      onEachFeature: onEachFeature
-    }).addTo(map);
-            
-    lc.start();
-            
-  </script>
-  <div id="error"><%= message %></div>
-
-  
-</body>
+    </head>
+    <body>
+        <div id="map"></div>
+        <script>
+            var map;
+            function initMap() {
+                map = new google.maps.Map(document.getElementById('map'), {
+                    center: {lat: 45.403071, lng: -75.688323},
+                    zoom: 13
+                });
+            }
+        </script>
+        
+    </body>
 </html>
