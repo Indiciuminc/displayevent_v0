@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<!-- Declares nowmaprApp as the starting Angular module -->
 <html lang="en">
     <head>
         <meta charset="UTF-8">
         <meta name="description" content="Webpage-based application for viewing events near user's location">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
         <title><%= title %></title>
+        
         <!-- JS Source -->
         <script src="https://cdn.jsdelivr.net/lodash/3.10.0/lodash.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.10/angular.min.js"></script>
@@ -18,9 +18,8 @@
             #map {height: 100%;}
             .angular-google-map-container { height: 100%; width: 100%; position: absolute; top:0; left:0;}
         </style>
-        <!-- Google Maps API -->
-        <!--<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCW1as5vFGFMHEPJhnUKVdLl7-SYA_1SZE&callback=initMap" async defer></script>-->
     </head>
+    <!-- Declares nowmaprApp as the starting Angular module -->
     <body ng-app="nowmaprApp">
         <div ng-controller="displayEvents">
             <div id="map">
