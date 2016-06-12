@@ -9,7 +9,7 @@ angular.module('nowmaprApp', ['uiGmapgoogle-maps'])
     });
 })
 
-.controller('displayEvents', function($scope, uiGmapGoogleMapApi, nowmaprServices) {
+.controller('displayEvents', function($scope, uiGmapGoogleMapApi, uiGmapIsReady, nowmaprServices) {
    
     var areaLat = 45.422503;
     var areaLng = -75.691284;
@@ -50,9 +50,32 @@ angular.module('nowmaprApp', ['uiGmapgoogle-maps'])
             showTraficLayer: true
         };
         
+        $scope.windowOptions = {
+            show: false
+        };
+        
         $scope.map.center = $scope.myCurrentLocation;
         console.log('maps',maps.LatLngBounds);
         console.log('function i want to run ONCE after initial map load...');
+        
+        uiGmapIsReady.promise() //If no value is put in promise(1)
+        .then(function (instances) {
+            console.log(instances[0].map); //Get the current map
+        })
+        .then(function() {
+            //Add function on Gmap ready that puts click actions on event markers
+            //$scope.addEventClickFunction($scope.evtMarkers);
+        });
+        
+        $scope.usrMrk = [{
+            id: 0,
+            coords: {
+                latitude: $scope.myCurrentLocation.latitude,
+                longitude: $scope.myCurrentLocation.longitude
+            },
+            data: 'myLocation'
+        }];
+        
     });
 })
 
@@ -104,5 +127,4 @@ angular.module('nowmaprApp', ['uiGmapgoogle-maps'])
         return deferred.promise;
     };
 });
-    
    
