@@ -25,7 +25,10 @@
     <body ng-app="nowmaprApp">
         <div ng-controller="displayEvents">
             <div id="map">
-                <ui-gmap-google-map center='map.center' zoom='map.zoom' options='map.options'></ui-gmap-google-map>
+                <ui-gmap-google-map center='map.center' zoom='map.zoom' options='map.options'>
+                    <ui-gmap-markers models="usrMrk" idkey="usrMrk.id" coords="'coords'" icon='{url: "http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|007FFF" }'></ui-gmap-markers>
+                    <ui-gmap-markers models="nowmaprEvents" idkey="nowmaprEvents.id" coords="'coords'"></ui-gmap-markers>
+                </ui-gmap-google-map>
             </div>
         </div> 
     </body>

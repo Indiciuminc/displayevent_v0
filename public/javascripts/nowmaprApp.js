@@ -9,7 +9,7 @@ angular.module('nowmaprApp', ['uiGmapgoogle-maps'])
     });
 })
 
-.controller('displayEvents', function($scope, uiGmapGoogleMapApi, uiGmapIsReady, nowmaprServices) {
+.controller('displayEvents', function($scope, uiGmapGoogleMapApi, uiGmapIsReady, nowmaprServices, nowmaprData) {
    
     var areaLat = 45.422503;
     var areaLng = -75.691284;
@@ -76,6 +76,32 @@ angular.module('nowmaprApp', ['uiGmapgoogle-maps'])
             data: 'myLocation'
         }];
         
+        $scope.nowmaprEvents = [];
+        
+        $scope.message = "Searching for nearby places";
+        var myLat = $scope.myCurrentLocation.latitude;
+        var myLng = $scope.myCurrentLocation.longitude;
+        nowmaprData.locationByCoords(myLat, myLng)
+            .success(function(data) {
+                $scope.message = data.length > 0 ? "" : "No locations found";
+                //$scope.data = { locations: data };
+                for(var i=0; i < data.length; i++) {
+                    var event = data[i];
+                    
+                    $scope.nowmaprEvents.push({
+                        id: event._id,
+                        coords: {
+                            latitude: event.coords[1],
+                            longitude: event.coords[0]
+                        },
+                        data: event.name
+                    });
+                }
+            })
+            .error(function (e) {
+                $scope.message = "Sorry, something's gone wrong";
+            });
+        
     });
 })
 
@@ -125,6 +151,15 @@ angular.module('nowmaprApp', ['uiGmapgoogle-maps'])
         });
         
         return deferred.promise;
+    };
+})
+
+.service('nowmaprData', function($http) {
+    var locationByCoords = function(lat, lng) {
+        return $http.get('/api?lng=' + lng + '&lat=' + lat + '&maxDistance=5');
+    };
+    return {
+        locationByCoords : locationByCoords
     };
 });
    
